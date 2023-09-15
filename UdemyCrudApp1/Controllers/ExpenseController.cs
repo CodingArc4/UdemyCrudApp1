@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using UdemyCrudApp1.Data;
 using UdemyCrudApp1.Models;
+using UdemyCrudApp1.Models.ViewModels;
 
 namespace UdemyCrudApp1.Controllers
 {
@@ -17,32 +19,49 @@ namespace UdemyCrudApp1.Controllers
         //Display list of Expenses
         public IActionResult Index()
         {
-            IEnumerable<Expense> ExpList = _context.Expenses;
+            IEnumerable<Expense> ExpList = _context.Expenses.Include(e => e.Category).ToList();
+
+            //foreach (var item in ExpList)
+            //{
+            //    item.Category = _context.Categories.FirstOrDefault(i => i.Id == item.CategoryId);
+            //}
+
             return View(ExpList);
         }
 
         //Display Expenses add Form
         public IActionResult Create() {
-            
-            //DropDown list for Category type
-            IEnumerable<SelectListItem> CategoryDropDown = _context.Categories.Select(i => new SelectListItem { 
-                Text = i.CategoryName,
-                Value = i.Id.ToString()
-            });
 
-            ViewBag.CategoryDropDown = CategoryDropDown;
+            //DropDown list for Category type
+            //IEnumerable<SelectListItem> CategoryDropDown = _context.Categories.Select(i => new SelectListItem { 
+            //    Text = i.CategoryName,
+            //    Value = i.Id.ToString()
+            //});
+
+            //ViewBag.CategoryDropDown = CategoryDropDown;
+
             
-            return View();
+            ExpenseVM expenseVM = new ExpenseVM()
+            {
+                Expense = new Expense(),
+                CategoryDropDown = _context.Categories.Select(i => new SelectListItem
+                {
+                        Text = i.CategoryName,
+                        Value = i.Id.ToString()
+                })
+            };
+
+            return View(expenseVM);
         }
 
         //POST Create Expenses
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Expense obj)
+        public IActionResult Create(ExpenseVM obj)
         {
             if (ModelState.IsValid)
             {
-                _context.Expenses.Add(obj);
+                _context.Expenses.Add(obj.Expense);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }

@@ -26,6 +26,9 @@
                         Expense Cost
                     </th>
                     <th>
+                        Expense Type
+                    </th>
+                    <th>
                         Changes
                     </th>
                 </tr>
@@ -34,9 +37,10 @@
                 @foreach (var expense in Model)
                 {
                     <tr>
-                        <td width="35%">@expense.ExpenseName</td>
-                        <td width="35%">@expense.ExpenseCost</td>
-                        <td width="30%">
+                        <td width="25%">@expense.ExpenseName</td>
+                        <td width="25%">@expense.ExpenseCost</td>
+                        <td width="25%">@expense.Category.CategoryName</td>
+                        <td width="25%">
                             <div class="w-100 btn-group" role="group">
                                 <!--by pressing this button user will be directed toward the update page-->
                                 <a asp-controller="Expense" asp-action="Update" asp-route-Id="@expense.Id" class="btn btn-primary mx-1">Update</a>
