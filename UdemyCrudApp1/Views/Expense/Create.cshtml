@@ -30,7 +30,7 @@
                     </div>
                     <div class="col-4">
                         <select asp-for="CategoryId" asp-items="@ViewBag.CategoryDropDown" class="form-control" >
-                            <option selected>---Select Category---</option>
+                            <option value="">---Select Category---</option>
                         </select>
                         <span asp-validation-for="CategoryId" class="text-danger"></span>
                     </div>

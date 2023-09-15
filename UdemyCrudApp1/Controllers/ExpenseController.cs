@@ -40,7 +40,7 @@ namespace UdemyCrudApp1.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Expense obj)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 _context.Expenses.Add(obj);
                 _context.SaveChanges();
