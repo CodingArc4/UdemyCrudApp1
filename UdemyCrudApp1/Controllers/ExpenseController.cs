@@ -103,27 +103,37 @@ namespace UdemyCrudApp1.Controllers
         //GET Update
         public IActionResult Update(int? id)
         {
+            ExpenseVM expenseVM = new ExpenseVM()
+            {
+                Expense = new Expense(),
+                CategoryDropDown = _context.Categories.Select(i => new SelectListItem
+                {
+                    Text = i.CategoryName,
+                    Value = i.Id.ToString()
+                })
+            };
+
             if (id == null || id == 0)
             {
                 return NotFound();
             }
 
-            var obj = _context.Expenses.Find(id);
-            if (obj == null)
+            expenseVM.Expense = _context.Expenses.Find(id);
+            if (expenseVM.Expense == null)
             {
                 return NotFound();
             }
-            return View(obj);
+            return View(expenseVM);
         }
 
         //POST Update Expenses
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update(Expense obj)
+        public IActionResult Update(ExpenseVM obj)
         {
             if (ModelState.IsValid)
             {
-                _context.Expenses.Update(obj);
+                _context.Expenses.Update(obj.Expense);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }

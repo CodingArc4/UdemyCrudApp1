@@ -1,7 +1,7 @@
-﻿@model UdemyCrudApp1.Models.Expense
+﻿@model UdemyCrudApp1.Models.ViewModels.ExpenseVM
 
 <form method="post" asp-action="Update">
-    <input asp-for="Id" hidden />
+    <input asp-for="Expense.Id" hidden />
     <div class="border p-3">
         <div class="form-group row">
             <h2 class="text-black-50 pl-3">Update Expense</h2>
@@ -9,19 +9,28 @@
         <div class="row">
             <div class="col-12">
                 <div class="form-group row">
-                    <div class="col-6">
-                        <label asp-for="ExpenseName"></label>
+                    <div class="col-4">
+                        <label asp-for="Expense.ExpenseName"></label>
                     </div>
-                    <div class="col-6">
-                        <label asp-for="ExpenseCost"></label>
+                    <div class="col-4">
+                        <label asp-for="Expense.ExpenseCost"></label>
+                    </div>
+                    <div class="col-4">
+                        <label asp-for="Expense.Category"></label>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <div class="col-6">
-                        <input asp-for="ExpenseName" class="form-control" />
+                    <div class="col-4">
+                        <input asp-for="Expense.ExpenseName" class="form-control" />
                     </div>
-                    <div class="col-6">
-                        <input asp-for="ExpenseCost" class="form-control" />
+                    <div class="col-4">
+                        <input asp-for="Expense.ExpenseCost" class="form-control" />
+                    </div>
+                    <div class="col-4">
+                        <select asp-for="Expense.CategoryId" asp-items="@Model.CategoryDropDown" class="form-control">
+                            <option selected>---Select Category---</option>
+                        </select>
+                        <span asp-validation-for="Expense.CategoryId" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group row my-4">
