@@ -1,0 +1,51 @@
+﻿@model IEnumerable<UdemyCrudApp1.Models.Item>
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Borrowed Item List</h2>
+        </div>
+        <div class="col-6 text-end">
+            <!--by pressing this button user will be directed toward the create page-->
+            <a asp-controller="Item" asp-action="Create" class="btn btn-primary">Create New Item</a>
+        </div>
+    </div>
+    <br />
+
+    <!--Display data from the Model-->
+    <!--If count > 0 then data will be displayed else it will show an error message-->
+    @if(Model.Count() > 0)
+    {
+        <table class="table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>
+                        Item Name
+                    </th>
+                    <th>
+                        Borrower
+                    </th>
+                    <th>
+                        Lender
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td width="30%">@item.ItemName</td>
+                        <td width="30%">@item.Borrower</td>
+                        <td width="30%">@item.Lender</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No Items created yet</p>
+    }
+
+
+</div>

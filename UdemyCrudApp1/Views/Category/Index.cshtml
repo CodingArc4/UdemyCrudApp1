@@ -1,0 +1,54 @@
+﻿@model IEnumerable<UdemyCrudApp1.Models.Category>
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Expense Category List</h2>
+        </div>
+        <div class="col-6 text-end">
+            <!--by pressing this button user will be directed toward the create page-->
+            <a asp-controller="Category" asp-action="Create" class="btn btn-primary">Create New Expense Category</a>
+        </div>
+    </div>
+    <br />
+
+    <!--Display data from the Model-->
+    <!--If count > 0 then data will be displayed else it will show an error message-->
+    @if (Model.Count() > 0)
+    {
+        <table class="table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>
+                        Category Name
+                    </th>
+                    <th>
+                        Changes
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var category in Model)
+                {
+                    <tr>
+                        <td width="30%">@category.CategoryName</td>
+                        <td width="30%">
+                            <div class="w-100 btn-group" role="group">
+                                <!--by pressing this button user will be directed toward the update page-->
+                                <a asp-controller="Category" asp-action="Update" asp-route-Id="@category.Id" class="btn btn-primary mx-1">Update</a>
+                                <!--delete the expense-->
+                                <a asp-controller="Category" asp-action="Delete" asp-route-Id="@category.Id" class="btn btn-danger mx-1">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No Category created yet</p>
+    }
+
+</div>
